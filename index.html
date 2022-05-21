@@ -50,24 +50,21 @@
                 maxTime ++;
             }, 1000)
         }
-
-        
             
         buttonCounter.onclick = function () {
-            console.log('startTest()')
             if (!testIsRunning){
+                console.log('startTest')
                 // prevent duplicate test during clicking on button until we finish the test
                 testIsRunning = 1
                 timer()
             }
             else {
-                console.log('else!!!')
+                console.log('Test running')
             }
             clicksCount ++;
             console.log('clicksCount: ', clicksCount)
             clicksCountBadge.innerHTML = clicksCount
         }
-        
 
         function resetTest() {
             buttonCounter.removeAttribute('disabled')
