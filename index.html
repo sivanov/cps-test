@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>CPS Test</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>    
+</head>
+<body>
+    <progress value="0" max="10" id="progressBar">
+    </progress>
+    <div>
+        <span id="seconds">0</span><span>/10&nbsp;seconds</span>
+    </div>
+    <br>
+
+    <button id="counter">
+        Click me!
+    </button>
+    <button disabled="" id="reset" onclick="resetTest()">
+        Reset test
+    </button>
+
+    <br><br>
+    <div><span id="clicksCount">0</span>&nbsp;counts</div>
+    
+
+    <script>
+        var testIsRunning = 0
+        var clicksCount = 0
+        var buttonCounter = document.getElementById("counter")
+        var buttonReset = document.getElementById("reset")
+        var clicksCountBadge = document.getElementById("clicksCount")
+        var progressBar = document.getElementById("progressBar")
+        
+        function timer() {
+            var maxTime = 0;
+            var testTimer = setInterval(function () {
+                if (maxTime === 10) {
+                    clearInterval(testTimer)
+                    // disabling click button
+                    buttonCounter.setAttribute("disabled", true)
+                    buttonCounter.innerHTML = "Test Finish"
+                    buttonReset.removeAttribute("disabled")
+                }
+                document.getElementById("progressBar").value = maxTime; 
+                document.getElementById("seconds").innerHTML = maxTime;
+                
+                console.log('time left: ', maxTime);
+                maxTime ++;
+            }, 1000)
+        }
+
+        
+            
+        buttonCounter.onclick = function () {
+            console.log('startTest()')
+            if (!testIsRunning){
+                // prevent duplicate test during clicking on button until we finish the test
+                testIsRunning = 1
+                timer()
+            }
+            else {
+                console.log('else!!!')
+            }
+            clicksCount ++;
+            console.log('clicksCount: ', clicksCount)
+            clicksCountBadge.innerHTML = clicksCount
+        }
+        
+
+        function resetTest() {
+            buttonCounter.removeAttribute('disabled')
+            testIsRunning = 0
+            clicksCount = 0
+            document.getElementById("seconds").innerHTML = "0"
+            clicksCountBadge.innerHTML = 0
+            buttonCounter.innerHTML = "Click me!"
+            buttonReset.removeAttribute("disabled")
+            buttonReset.setAttribute("disabled", true)
+            progressBar.setAttribute("value", 0)
+        }
+
+    </script>
+</body>
+</html>
